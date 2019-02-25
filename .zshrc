@@ -113,5 +113,5 @@ function archive_diff_dir()
   if [ "$diff" != "" ]; then
     diff="git diff --diff-filter=d --name-only ${diff}"
   fi
-  git archive --format=zip --prefix=$root/ $h `eval $diff` -o ~/desktop/${date}_${name}_data.zip
+  git archive --format=zip --prefix=$root/ $h `eval $diff` --worktree-attributes -o ~/desktop/${date}_${name}_data.zip
 }
