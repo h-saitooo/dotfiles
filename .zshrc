@@ -1,6 +1,9 @@
 PS1="[%F{cyan}${USER}%f@${HOST%%.*} %F{magenta}%1~%f]%(!.#.$) "
 
-PATH=/usr/local/Cellar/git/2.19.2/bin:/usr/local/bin:~/bin:$HOME/.nodebrew/current/bin:~/Library/Android/sdk/tools:$PATH
+PATH=/usr/local/Cellar/git/2.19.2/bin:/usr/local/bin:~/bin:~/Library/Android/sdk/tools:$PATH
+
+eval "$(direnv hook zsh)"
+eval "$(anyenv init -)"
 
 alias ls='ls -CF'
 alias mkdir='mkdir -p'
@@ -9,6 +12,7 @@ alias bw-s='browser-sync start --server --online --no-notify --files *'
 alias bw-sc='browser-sync start --config ./bs-config.js'
 alias dcp='docker-compose'
 alias acvDir='archive_diff_dir'
+alias py2serv='python -m SimpleHTTPServer'
 
 RPROMPT="%T"
 setopt transient_rprompt
