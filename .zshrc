@@ -1,9 +1,16 @@
 PS1="[%F{cyan}${USER}%f@${HOST%%.*} %F{magenta}%1~%f]%(!.#.$) "
 
-PATH=/usr/local/Cellar/git/2.19.2/bin:/usr/local/bin:~/bin:~/Library/Android/sdk/tools:$PATH
+PATH=/usr/local/Cellar/git/2.23.0_1/bin:/usr/local/bin:~/bin:~/Library/Android/sdk/tools:$PATH
 
 eval "$(direnv hook zsh)"
+
+#nodenv init
 eval "$(anyenv init -)"
+
+# rbenv init
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 alias ls='ls -CF'
 alias mkdir='mkdir -p'
