@@ -1,10 +1,19 @@
-PS1="[%F{cyan}${USER}%f@${HOST%%.*} %F{magenta}%1~%f]%(!.#.$) "
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
 
-PATH=/usr/local/Cellar/git/2.23.0_1/bin:/usr/local/bin:~/bin:~/Library/Android/sdk/tools:$PATH
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
+# Customize to your needs...
 eval "$(direnv hook zsh)"
 
-#nodenv init
+#anyenv init
 eval "$(anyenv init -)"
 
 # rbenv init
@@ -18,8 +27,8 @@ alias gitst='git status'
 alias bw-s='browser-sync start --server --online --no-notify --files *'
 alias bw-sc='browser-sync start --config ./bs-config.js'
 alias dcp='docker-compose'
-alias acvDir='archive_diff_dir'
-alias py2serv='python -m SimpleHTTPServer'
+alias acvDir='git_diff_archive'
+alias py3serv='python3 -m http.server 8000'
 
 RPROMPT="%T"
 setopt transient_rprompt
@@ -46,83 +55,3 @@ setopt share_history
 setopt EXTENDED_HISTORY
 
 zstyle ':completion:*:default' menu select=1
-
-function archive_diff_dir()
-{
-  local diff=""
-  local name="archive"
-  local h="HEAD"
-  local start=""
-  local end=""
-  local root=""
-  local dir=""
-  local date=`date +%y%m%d`
-  if [ $# -eq 1 ]; then
-    name="$1"
-    root="$1"
-  elif [ $# -eq 2 ]; then
-    name="$1"
-    root="$1"
-    if expr "$2" : '[0-9]*$' > /dev/null ; then
-      diff="HEAD~${2} HEAD"
-    else
-      diff="${2} HEAD"
-    fi
-  elif [ $# -eq 3 ]; then
-    name="$1"
-    root="$1"
-    if expr "$2" : '[0-9]*$' > /dev/null ; then
-      start="HEAD~${2}"
-    else
-      start="$2"
-    fi
-    if expr "$3" : '[0-9]*$' > /dev/null ; then
-      end="HEAD~${3}"
-    else
-      end="$3"
-    fi
-    h=$end
-    diff="${start} ${end}"
-  elif [ $# -eq 4 ]; then
-    name="$1"
-    if expr "$2" : '[0-9]*$' > /dev/null ; then
-      start="HEAD~${2}"
-    else
-      start="$2"
-    fi
-    if expr "$3" : '[0-9]*$' > /dev/null ; then
-      end="HEAD~${3}"
-    else
-      end="$3"
-    fi
-    if expr "$4" : '^:' > /dev/null ; then
-      dir="$4"
-      root="$1"
-    else
-      dir=""
-      root="$4"
-    fi
-    h="${end}${dir}"
-    diff="${start}${dir} ${end}${dir}"
-  elif [ $# -eq 5 ]; then
-    name="$1"
-    dir="$4"
-    root="$5"
-    if expr "$2" : '[0-9]*$' > /dev/null ; then
-      start="HEAD~${2}"
-    else
-      start="$2"
-    fi
-    if expr "$3" : '[0-9]*$' > /dev/null ; then
-      end="HEAD~${3}"
-    else
-      end="$3"
-    fi
-    h="${end}${dir}"
-    diff="${start}${dir} ${end}${dir}"
-  fi
-  if [ "$diff" != "" ]; then
-    diff="git diff --diff-filter=d --name-only ${diff}"
-  fi
-  git archive --format=zip --prefix=$root/ $h `eval $diff` --worktree-attributes -o ~/desktop/${date}_${name}_data.zip
-}

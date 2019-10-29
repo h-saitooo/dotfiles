@@ -1,66 +1,69 @@
 set encoding=utf-8
 scriptencoding utf-8
-" ↑1行目は読み込み時の文字コードの設定
-" ↑2行目はVim Script内でマルチバイトを使う場合の設定
-" Vim scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
 
 "----------------------------------------------------------
-" NeoBundle
+" dein.vim
 "----------------------------------------------------------
-if has('vim_starting')
-    " 初回起動時のみruntimepathにNeoBundleのパスを指定する
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+" プラグインが実際にインストールされるディレクトリ
+let s:dein_dir = expand('~/.vim/.cache/dein')
+" dein.vim 本体
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-    " NeoBundleが未インストールであればgit cloneする
-    if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
-        echo "install NeoBundle..."
-        :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
-    endif
+" dein.vim がなければ github から落としてくる
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
-" インストールするVimプラグインを以下に記述
-" NeoBundle自身を管理
-NeoBundleFetch 'Shougo/neobundle.vim'
-" カラースキームmolokai
-NeoBundle 'skielbasa/vim-material-monokai'
-" ステータスラインの表示内容強化
-NeoBundle 'itchyny/lightline.vim'
-" インデントの可視化
-NeoBundle 'Yggdroot/indentLine'
-" 末尾の全角半角空白文字を赤くハイライト
-NeoBundle 'bronson/vim-trailing-whitespace'
-" 構文エラーチェック
-NeoBundle 'scrooloose/syntastic'
-" 多機能セレクタ
-NeoBundle 'ctrlpvim/ctrlp.vim'
-" CtrlPの拡張プラグイン. 関数検索
-NeoBundle 'tacahiroy/ctrlp-funky'
-" CtrlPの拡張プラグイン. コマンド履歴検索
-NeoBundle 'suy/vim-ctrlp-commandline'
-" CtrlPの検索にagを使う
-NeoBundle 'rking/ag.vim'
-" プロジェクトに入ってるESLintを読み込む
-NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
+call dein#begin(expand('~/.vim/dein'))
 
-" vimのlua機能が使える時だけ以下のVimプラグインをインストールする
-if has('lua')
-    " コードの自動補完
-    NeoBundle 'Shougo/neocomplete.vim'
-    " スニペットの補完機能
-    NeoBundle "Shougo/neosnippet"
-    " スニペット集
-    NeoBundle 'Shougo/neosnippet-snippets'
+if dein#load_state(s:dein_dir)
+    call dein#add('Shougo/dein.vim')
+    call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+
+    " カラースキームmolokai
+    call dein#add('skielbasa/vim-material-monokai')
+    " ステータスラインの表示内容強化
+    call dein#add('itchyny/lightline.vim')
+    " インデントの可視化
+    call dein#add('Yggdroot/indentLine')
+    " 末尾の全角半角空白文字を赤くハイライト
+    call dein#add('bronson/vim-trailing-whitespace')
+    " 構文エラーチェック
+    call dein#add('scrooloose/syntastic')
+    " 多機能セレクタ
+    call dein#add('ctrlpvim/ctrlp.vim')
+    " CtrlPの拡張プラグイン. 関数検索
+    call dein#add('tacahiroy/ctrlp-funky')
+    " CtrlPの拡張プラグイン. コマンド履歴検索
+    call dein#add('suy/vim-ctrlp-commandline')
+    " CtrlPの検索にagを使う
+    call dein#add('rking/ag.vim')
+    " プロジェクトに入ってるESLintを読み込む
+    call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+    " Editorの統一性を高める
+    call dein#add('editorconfig/editorconfig-vim')
+
+    call dein#add('Shougo/neocomplete.vim')
+    call dein#add('Shougo/neomru.vim')
+    call dein#add('Shougo/neosnippet')
+
+    call dein#end()
+    call dein#save_state()
 endif
 
-call neobundle#end()
 
-" ファイルタイプ別のVimプラグイン/インデントを有効にする
-filetype plugin indent on
+if dein#check_install()
+    call dein#install()
+endif
 
-" 未インストールのVimプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
-NeoBundleCheck
 
 "----------------------------------------------------------
 " カラースキーム
@@ -70,7 +73,14 @@ highlight Normal ctermbg=none
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
 
+if &term =~ '256color'
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
 set background=dark
+set termguicolors
+
 "----------------------------------------------------------
 " 文字
 "----------------------------------------------------------
@@ -97,11 +107,11 @@ set history=5000 " 保存するコマンド履歴の数
 " タブ・インデント
 "----------------------------------------------------------
 set expandtab " タブ入力を複数の空白入力に置き換える
-set tabstop=2 " 画面上でタブ文字が占める幅
-set softtabstop=2 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set tabstop=4 " 画面上でタブ文字が占める幅
+set softtabstop=4 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
 set autoindent " 改行時に前の行のインデントを継続する
 set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
-set shiftwidth=2 " smartindentで増減する幅
+set shiftwidth=4 " smartindentで増減する幅
 
 "----------------------------------------------------------
 " 文字列検索
@@ -170,7 +180,7 @@ endif
 "----------------------------------------------------------
 " neocomplete・neosnippetの設定
 "----------------------------------------------------------
-if neobundle#is_installed('neocomplete.vim')
+if dein#tap('neocomplete.vim')
     " Vim起動時にneocompleteを有効にする
     let g:neocomplete#enable_at_startup = 1
     " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
