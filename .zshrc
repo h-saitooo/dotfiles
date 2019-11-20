@@ -30,7 +30,14 @@ alias dcp='docker-compose'
 alias acvDir='git_diff_archive'
 alias py3serv='python3 -m http.server 8000'
 
-RPROMPT="%T"
+re-prompt() {
+    zle .reset-prompt
+    zle .accept-line
+}
+
+zle -N accept-line re-prompt
+
+# RPROMPT="%F{cyan}%*%f"
 setopt transient_rprompt
 setopt prompt_subst
 bindkey -e
