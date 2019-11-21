@@ -27,7 +27,7 @@ alias gitst='git status'
 alias bw-s='browser-sync start --server --online --no-notify --files *'
 alias bw-sc='browser-sync start --config ./bs-config.js'
 alias dcp='docker-compose'
-alias acvDir='git_diff_archive'
+alias acvDir='git-diff-archive'
 alias py3serv='python3 -m http.server 8000'
 
 re-prompt() {
