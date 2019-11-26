@@ -14,12 +14,14 @@ fi
 eval "$(direnv hook zsh)"
 
 #anyenv init
-eval "$(anyenv init -)"
+if which anyenv > /dev/null; then eval "$(anyenv init -)"; fi
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init - zsh)"
 
 # rbenv init
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+eval "$(rbenv init - zsh)"
 
 alias ls='ls -CF'
 alias mkdir='mkdir -p'
