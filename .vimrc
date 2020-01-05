@@ -1,7 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-"----------------------------------------------------------
+
 " dein.vim
 "----------------------------------------------------------
 " プラグインが実際にインストールされるディレクトリ
@@ -50,6 +50,8 @@ if dein#load_state(s:dein_dir)
     call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
     " Editorの統一性を高める
     call dein#add('editorconfig/editorconfig-vim')
+    " Wakatimeで作業時間を計測する
+    call dein#add('wakatime/vim-wakatime')
 
     call dein#add('Shougo/neocomplete.vim')
     call dein#add('Shougo/neomru.vim')
@@ -239,3 +241,9 @@ if executable('ag')
   let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
   let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
 endif
+
+
+"----------------------------------------------------------
+" Package
+"----------------------------------------------------------
+call map(dein#check_clean(), "delete(v:val, 'rf')")
