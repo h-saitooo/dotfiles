@@ -1,6 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
 
+set timeout timeoutlen=50
 
 " dein.vim
 "----------------------------------------------------------
