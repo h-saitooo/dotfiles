@@ -23,6 +23,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 
+fpath=($(brew --prefix)/share/zsh-completions $fpath)
+autoload -Uz compinit
+compinit -u
+
 alias ls='ls -CF'
 alias mkdir='mkdir -p'
 alias gitst='git status'
@@ -46,14 +50,13 @@ bindkey -e
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 
-autoload -Uz compinit
-compinit -u
 setopt autopushd
 setopt pushd_ignore_dups
 setopt auto_cd
 setopt list_packed
 setopt list_types
 setopt correct
+setopt complete_in_word
 
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -63,4 +66,3 @@ setopt hist_reduce_blanks
 setopt share_history
 setopt EXTENDED_HISTORY
 
-zstyle ':completion:*:default' menu select=1
