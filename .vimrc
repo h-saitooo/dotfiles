@@ -49,6 +49,8 @@ if dein#load_state(s:dein_dir)
     call dein#add('rking/ag.vim')
     " プロジェクトに入ってるESLintを読み込む
     call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
+    " TypeScript 補完
+    call dein#add('Quramy/tsuquyomi')
     " Editorの統一性を高める
     call dein#add('editorconfig/editorconfig-vim')
     " Wakatimeで作業時間を計測する

@@ -27,7 +27,7 @@ fpath=($(brew --prefix)/share/zsh-completions $fpath)
 autoload -Uz compinit
 compinit -u
 
-alias ls='ls -CF'
+alias ls='ls -F'
 alias mkdir='mkdir -p'
 alias gitst='git status'
 alias bw-s='npx browser-sync start --server --online --no-notify --files *'
@@ -35,6 +35,7 @@ alias bw-sc='npx browser-sync start --config ./bs-config.js'
 alias dcp='docker-compose'
 alias acvDir='git-diff-archive'
 alias py3serv='python3 -m http.server 8000'
+alias vscode='open -a Visual\ Studio\ Code'
 
 re-prompt() {
     zle .reset-prompt
@@ -58,9 +59,10 @@ setopt list_types
 setopt correct
 setopt complete_in_word
 
-HISTFILE=~/.histfile
+HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
+setopt appendhistory
 setopt hist_ignore_dups
 setopt hist_reduce_blanks
 setopt share_history
