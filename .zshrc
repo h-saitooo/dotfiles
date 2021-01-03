@@ -29,6 +29,7 @@ compinit -u
 
 alias ls='ls -F'
 alias mkdir='mkdir -p'
+alias vim='nvim'
 alias gitst='git status'
 alias bw-s='npx browser-sync start --server --online --no-notify --files *'
 alias bw-sc='npx browser-sync start --config ./bs-config.js'
@@ -68,3 +69,5 @@ setopt hist_reduce_blanks
 setopt share_history
 setopt EXTENDED_HISTORY
 
+stty stop undef
+stty start undef
