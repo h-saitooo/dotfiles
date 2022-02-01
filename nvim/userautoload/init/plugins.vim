@@ -30,6 +30,17 @@ Plug 'pmsorhaindo/syntastic-local-eslint.vim'
 Plug 'editorconfig/editorconfig-vim'
 " Wakatimeで作業時間を計測する
 Plug 'wakatime/vim-wakatime'
+" VIM tsx
+Plug 'ianks/vim-tsx'
+" VIM Typescript
+Plug 'leafgarland/typescript-vim'
+" vim-go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+" Dash
+Plug 'mrjones2014/dash.nvim', { 'do': 'make install' }
 
 
 Plug 'Shougo/neomru.vim'

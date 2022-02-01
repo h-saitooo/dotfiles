@@ -23,6 +23,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 
+# pyenv init
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
 autoload -Uz compinit
 compinit -u
@@ -37,6 +42,7 @@ alias dcp='docker-compose'
 alias acvDir='git-diff-archive'
 alias py3serv='python3 -m http.server 8000'
 alias vscode='open -a Visual\ Studio\ Code'
+alias awsl='aws --profile localstack --endpoint-url=http://localhost:4566'
 
 re-prompt() {
     zle .reset-prompt
@@ -50,7 +56,8 @@ setopt transient_rprompt
 setopt prompt_subst
 bindkey -e
 export LANG=ja_JP.UTF-8
-export EDITOR=vim
+export EDITOR=nvim
+export GPG_TTY=$(tty)
 
 setopt autopushd
 setopt pushd_ignore_dups
@@ -71,3 +78,5 @@ setopt EXTENDED_HISTORY
 
 stty stop undef
 stty start undef
+
+[[ -s "/Users/hifrnd/.gvm/scripts/gvm" ]] && source "/Users/hifrnd/.gvm/scripts/gvm"
