@@ -16,6 +16,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-trailing-whitespace'
 " 構文エラーチェック
 Plug 'scrooloose/syntastic'
+" Typescript ツール
+Plug 'Quramy/tsuquyomi'
+" Typescript Syntax
+Plug 'leafgarland/typescript-vim'
 " CtrlPの拡張プラグイン
 Plug 'ctrlpvim/ctrlp.vim'
 " CtrlPの拡張プラグイン 関数検索
