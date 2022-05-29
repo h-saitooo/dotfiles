@@ -1,0 +1,42 @@
+[color]
+	ui = true
+
+[core]
+	editor = nvim
+
+[init]
+	defaultBranch = main
+
+[commit]
+  gpgsign = true
+
+[pull]
+  rebase = false
+
+[alias]
+  b = branch
+  c = commit
+  co = checkout
+  sw = switch
+  st = status
+
+  unstage = reset --mixed HEAD
+  graph = log --graph --outline --decorate
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  plus-style = "syntax #025c00"
+  minus-style = "syntax #850003"
+  syntax-theme = Nord
+  navigate = true
+  line-numbers = true
+  side-by-side = true
+

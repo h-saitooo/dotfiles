@@ -43,6 +43,7 @@ alias acvDir='git-diff-archive'
 alias py3serv='python3 -m http.server 8000'
 alias vscode='open -a Visual\ Studio\ Code'
 alias awsl='aws --profile localstack --endpoint-url=http://localhost:4566'
+alias google-chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 
 re-prompt() {
     zle .reset-prompt

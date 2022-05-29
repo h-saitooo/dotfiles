@@ -45,6 +45,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 " Dash
 Plug 'mrjones2014/dash.nvim', { 'do': 'make install' }
+" Emmet
+Plug 'mattn/emmet-vim'
 
 
 Plug 'Shougo/neomru.vim'
