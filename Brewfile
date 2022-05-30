@@ -1,8 +1,6 @@
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
-tap "minio/stable"
-tap "nodenv/nodenv"
 tap "teamookla/speedtest"
 
 cask_args appdir: "~/Applications", require_sha: true
@@ -131,11 +129,8 @@ cask "deepl"
 cask "docker"
 cask "figma"
 cask "firefox"
-cask "font-hackgen"
-cask "font-hackgen-nerd"
 cask "google-japanese-ime"
 cask "iterm2"
-cask "karabiner-elements"
 cask "keka"
 cask "ngrok"
 cask "notion"
@@ -147,3 +142,5 @@ cask "toggl-track"
 cask "visual-studio-code"
 
 mas "Twingate", id: 1501592214
+mas "LINE", id: 539883307
+
