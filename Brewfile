@@ -3,7 +3,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 tap "teamookla/speedtest"
 
-cask_args appdir: "~/Applications", require_sha: true
+cask_args appdir: "/Applications", require_sha: true
 
 brew "anyenv"
 brew "aom"

@@ -1,0 +1,12 @@
+right_format = """$time"""
+
+[git_status]
+format='([$all_status](yellow) [$ahead_behind](bright-blue))'
+
+[time]
+disabled = false
+format='[$time]($style) '
+
+[username]
+style_user = "green bold"
+show_always = true

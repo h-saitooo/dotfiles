@@ -1,32 +1,11 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export GPG_TTY=$(tty)
 
 # Customize to your needs...
 eval "$(direnv hook zsh)"
 
-#anyenv init
-if which anyenv > /dev/null; then eval "$(anyenv init -)"; fi
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init - zsh)"
-
-# rbenv init
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
-
-# pyenv init
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
+source $(brew --prefix asdf)/asdf.sh
+source ~/.zshrc_local
 
 fpath=($(brew --prefix)/share/zsh-completions $fpath)
 autoload -Uz compinit
@@ -52,7 +31,6 @@ re-prompt() {
 
 zle -N accept-line re-prompt
 
-# RPROMPT="%F{cyan}%*%f"
 setopt transient_rprompt
 setopt prompt_subst
 bindkey -e
@@ -80,4 +58,10 @@ setopt EXTENDED_HISTORY
 stty stop undef
 stty start undef
 
-[[ -s "/Users/hifrnd/.gvm/scripts/gvm" ]] && source "/Users/hifrnd/.gvm/scripts/gvm"
+[[ -s "~/.gvm/scripts/gvm" ]] && source "~/.gvm/scripts/gvm"
+
+# source ~/.zsh/git-prompt.zsh
+# PROMPT="%F{green}%n%f (%m): %F{cyan}%~%f `git-prompt`"$'\n'"%# "
+eval "$(starship init zsh)"
+# RPROMPT="%F{cyan}%*%f"
+
