@@ -3,13 +3,17 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 " カラースキーム
-Plug 'nanotech/jellybeans.vim'
+Plug 'sainnhe/everforest'
 " 非同期処理
 Plug 'Shougo/vimproc.vim', {'do': 'make'}
 " 多機能整形ツール
 Plug 'junegunn/vim-easy-align'
+" File system explorer
+Plug 'preservim/nerdtree'
 " ステータスライン表示強化
 Plug 'itchyny/lightline.vim'
+" Syntax Highlight
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " インデント可視化
 Plug 'Yggdroot/indentLine'
 " 末尾の全角半角スペースをハイライト
