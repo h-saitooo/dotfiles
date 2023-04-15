@@ -49,6 +49,8 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 " Emmet
 Plug 'mattn/emmet-vim'
+" GitHub Copilot
+Plug 'github/copilot.vim'
 
 
 Plug 'Shougo/neomru.vim'
