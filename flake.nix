@@ -21,22 +21,23 @@
         # インストールしたいパッケージをここに追加
         home.packages = with nixpkgs.legacyPackages.x86_64-linux; [
           # 基本的な開発ツール
+          ghostty
           neovim
           git
           curl
           wget
 
           # シェルツール
-          ghostty
           fish
           tmux
           htop
+          lazygit
 
           # モダンなCLIツール
           ripgrep  # 高速なgrep代替
           fd       # 高速なfind代替
           bat      # catの改良版
-          exa      # lsの改良版
+          eza      # lsの改良版
 
           # その他便利ツール
           jq       # JSONパーサー
