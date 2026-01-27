@@ -2,9 +2,9 @@
   description = "Personal package management with home-manager";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -14,14 +14,15 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
       modules = [{
-        home.username = "noppo190";
+        nixpkgs.config.allowUnfree = true;
+
+        home.username = "noppo";
         home.homeDirectory = "/home/noppo";
-        home.stateVersion = "24.05";
+        home.stateVersion = "25.11";
 
         # インストールしたいパッケージをここに追加
         home.packages = with nixpkgs.legacyPackages.x86_64-linux; [
           # 基本的な開発ツール
-          ghostty
           neovim
           git
           curl
@@ -48,19 +49,13 @@
         ];
 
         # プログラム固有の設定（オプション）
-        programs.git = {
-          enable = true;
-          userName = "Noppo190";
-          userEmail = "36532103+h-saitooo@users.noreply.github.com";
-        };
-
-        programs.bash = {
-          enable = true;
-          shellAliases = {
-            ll = "ls -la";
-            update = "home-manager switch --flake ~/dotfiles";
-          };
-        };
+        # programs.bash = {
+        #   enable = true;
+        #   shellAliases = {
+        #     lg = "lazygit";
+        #     update = "home-manager switch --flake ~/dotfiles";
+        #   };
+        # };
 
         # home-managerの自己管理を有効化
         programs.home-manager.enable = true;
