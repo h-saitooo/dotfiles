@@ -9,19 +9,21 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
-    homeConfigurations."noppo190" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+  outputs = { nixpkgs, home-manager, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
 
-      modules = [{
-        nixpkgs.config.allowUnfree = true;
-
-        home.username = "noppo";
-        home.homeDirectory = "/home/noppo";
+      # 共通のパッケージとモジュール設定
+      commonModule = {
         home.stateVersion = "25.11";
 
-        # インストールしたいパッケージをここに追加
-        home.packages = with nixpkgs.legacyPackages.x86_64-linux; [
+        home.packages = with pkgs; [
+          # パッケージ検索: https://search.nixos.org/packages
+          # または: nix search nixpkgs パッケージ名
           # 基本的な開発ツール
           neovim
           git
@@ -42,24 +44,32 @@
 
           # その他便利ツール
           jq       # JSONパーサー
-
-          # ここに必要なパッケージを追加してください
-          # パッケージ検索: https://search.nixos.org/packages
-          # または: nix search nixpkgs パッケージ名
         ];
 
-        # プログラム固有の設定（オプション）
-        # programs.bash = {
-        #   enable = true;
-        #   shellAliases = {
-        #     lg = "lazygit";
-        #     update = "home-manager switch --flake ~/dotfiles";
-        #   };
-        # };
-
-        # home-managerの自己管理を有効化
         programs.home-manager.enable = true;
-      }];
+      };
+
+      # ホスト固有の設定を生成するヘルパー関数
+      mkHome = { username, homeDirectory }: home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          commonModule
+          {
+            home.username = username;
+            home.homeDirectory = homeDirectory;
+          }
+        ];
+      };
+
+    in {
+      homeConfigurations."noppo" = mkHome {
+        username = "noppo";
+        homeDirectory = "/home/noppo";
+      };
+
+      homeConfigurations."remote-dev" = mkHome {
+        username = "developer";
+        homeDirectory = "/home/developer";
+      };
     };
-  };
 }
