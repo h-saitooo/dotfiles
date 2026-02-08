@@ -32,7 +32,7 @@
 
           # シェルツール
           fish
-          tmux
+          zellij
           htop
           lazygit
 
