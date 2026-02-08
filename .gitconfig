@@ -7,8 +7,8 @@
 [init]
 	defaultBranch = main
 
-[commit]
-  gpgsign = true
+[user]
+	email = 36532103+h-saitooo@users.noreply.github.com
 
 [pull]
   rebase = false
