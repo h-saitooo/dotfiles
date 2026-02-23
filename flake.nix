@@ -11,14 +11,8 @@
 
   outputs = { nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
       # 共通のパッケージとモジュール設定
-      commonModule = {
+      commonModule = pkgs: {
         home.stateVersion = "25.11";
 
         home.packages = with pkgs; [
@@ -50,21 +44,34 @@
       };
 
       # ホスト固有の設定を生成するヘルパー関数
-      mkHome = { username, homeDirectory }: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          commonModule
-          {
-            home.username = username;
-            home.homeDirectory = homeDirectory;
-          }
-        ];
-      };
+      mkHome = { username, homeDirectory, system ? "x86_64-linux" }:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        in
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [
+            (commonModule pkgs)
+            {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+            }
+          ];
+        };
 
     in {
       homeConfigurations."noppo" = mkHome {
         username = "noppo";
         homeDirectory = "/home/noppo";
+      };
+
+      homeConfigurations."raspberry" = mkHome {
+        username = "noppo";
+        homeDirectory = "/home/noppo";
+        system = "aarch64-linux";
       };
 
       homeConfigurations."remote-dev" = mkHome {
