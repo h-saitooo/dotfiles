@@ -19,25 +19,13 @@
           # パッケージ検索: https://search.nixos.org/packages
           # または: nix search nixpkgs パッケージ名
           # 基本的な開発ツール
-          neovim
           git
           curl
           wget
 
           # シェルツール
           fish
-          zellij
           htop
-          lazygit
-
-          # モダンなCLIツール
-          ripgrep  # 高速なgrep代替
-          fd       # 高速なfind代替
-          bat      # catの改良版
-          eza      # lsの改良版
-
-          # その他便利ツール
-          jq       # JSONパーサー
         ];
 
         programs.home-manager.enable = true;
