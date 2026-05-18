@@ -2,8 +2,9 @@
 -- 右ステータスバー: CPU / RAM / GPU / VRAM 表示
 -- =============================================================================
 
-local wezterm = require 'wezterm'
-local stats   = require 'stats'
+local wezterm  = require 'wezterm'
+local platform = require 'platform'
+local stats    = require 'stats'
 
 local M = {}
 
@@ -44,6 +45,9 @@ local function flatten(segments)
 end
 
 function M.setup(config)
+  -- Linux 以外では計測実装が無いためステータス表示自体を行わない。
+  if platform.name ~= 'linux' then return end
+
   wezterm.on('update-right-status', function(window, _pane)
     local cpu        = stats.cpu_pct()
     local rp, ru, rt = stats.ram_info()
