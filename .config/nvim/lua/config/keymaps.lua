@@ -21,6 +21,11 @@ keymap("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 
 keymap("n", "<Esc>", ":nohlsearch<CR>", { desc = "Clear search highlights" })
 
+keymap("n", "<leader>yp", function() vim.fn.setreg("+", vim.fn.expand("%:.")) end, { desc = "Yank relative file path" })
+keymap("n", "<leader>ya", function() vim.fn.setreg("+", vim.fn.expand("%:p")) end, { desc = "Yank absolute file path" })
+keymap("n", "<leader>yf", function() vim.fn.setreg("+", vim.fn.expand("%:t")) end, { desc = "Yank file name" })
+keymap("n", "<leader>yd", function() vim.fn.setreg("+", vim.fn.expand("%:p:h")) end, { desc = "Yank parent directory path" })
+
 -- Japanese input method toggle
 keymap("i", "<C-j>", "<C-^>", { desc = "Toggle Japanese input method" })
 keymap("n", "<leader>ji", ":set iminsert=1<CR>", { desc = "Enable Japanese input" })
