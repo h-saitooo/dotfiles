@@ -26,6 +26,8 @@ keymap("n", "<leader>ya", function() vim.fn.setreg("+", vim.fn.expand("%:p")) en
 keymap("n", "<leader>yf", function() vim.fn.setreg("+", vim.fn.expand("%:t")) end, { desc = "Yank file name" })
 keymap("n", "<leader>yd", function() vim.fn.setreg("+", vim.fn.expand("%:p:h")) end, { desc = "Yank parent directory path" })
 
+keymap("n", "<leader>wr", ":set wrap!<CR>", { desc = "Toggle Word wrap" })
+
 -- Japanese input method toggle
 keymap("i", "<C-j>", "<C-^>", { desc = "Toggle Japanese input method" })
 keymap("n", "<leader>ji", ":set iminsert=1<CR>", { desc = "Enable Japanese input" })

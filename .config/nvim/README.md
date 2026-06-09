@@ -50,6 +50,7 @@ Leader キーは `Space` に設定。
 | `<leader>w` | Normal | ファイル保存 |
 | `<leader>q` | Normal | 終了 |
 | `<Esc>` | Normal | 検索ハイライト解除 |
+| `<leader>wr` | Normal | Word wrap 切り替え |
 
 ### ウィンドウ操作
 
