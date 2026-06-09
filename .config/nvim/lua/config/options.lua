@@ -17,6 +17,16 @@ opt.expandtab = true
 opt.autoindent = true
 opt.smartindent = true
 
+opt.list = true
+opt.listchars = {
+  tab = "→ ",
+  lead = "·",
+  trail = "·",
+  nbsp = "␣",
+  extends = "▶",
+  precedes = "◀",
+}
+
 opt.ignorecase = true
 opt.smartcase = true
 opt.hlsearch = true
