@@ -65,3 +65,7 @@ stty start undef
 eval "$(starship init zsh)"
 # RPROMPT="%F{cyan}%*%f"
 
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/hiroki_saito/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
