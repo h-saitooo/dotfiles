@@ -1,0 +1,8 @@
+;; uim-fepのデフォルトのインプットメソッドをMozcに設定
+(define default-im-name 'mozc)
+
+;; 日本語入力ONのキー設定 (Ctrl + \)
+(define-key generic-on-key? '("<Control>\\"))
+
+;; 日本語入力OFFのキー設定 (Ctrl + \)
+(define-key generic-off-key? '("<Control>\\"))
