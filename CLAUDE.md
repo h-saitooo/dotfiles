@@ -10,12 +10,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `.config/nvim` と `.config/wezterm` は `~/.config/` 配下へ手動でシンボリックリンクされている（`~/.config/nvim -> <repo>/.config/nvim`）。ファイルを編集すれば即座に実環境へ反映される。
 - ホーム直下の `.zshrc` / `.gitconfig` 等は手動配置で、`~/` の実体とリポジトリ版が一致しないことがある。
 
-## パッケージ管理（2 系統が併存）
+## パッケージ管理
 
-- **Nix flake + home-manager**（現行・Linux 中心）: `flake.nix`。`commonModule` に共通パッケージ、`mkHome` でホスト別構成を生成。出力構成は `noppo` / `raspberry`（aarch64）/ `remote-dev`。
-  - 適用: `home-manager switch --flake .#noppo`
-  - 入力更新: `nix flake update`（ロックは `flake.lock`）
-- **Brewfile**（レガシー・macOS）: `brew bundle --file=Brewfile`。Nix へ移行中の名残。
+- **Brewfile**（macOS）: `brew bundle --file=Brewfile`。
+- 言語ランタイムは asdf、ディレクトリ別環境は direnv で管理（`.zshrc` で初期化）。
 
 ## .config/nvim — Neovim 設定
 
@@ -52,8 +50,5 @@ lazy.nvim ベース。Leader は `Space`。**全キーバインド・プラグ�
 
 ## その他
 
-- `.config/starship.toml` — プロンプト（`.zshrc` 末尾の `starship init zsh` で有効化）。
-- `.zshrc` / `.zpreztorc` — zsh + prezto。asdf / direnv / starship を初期化、`~/.zshrc_local` で機密・ローカル設定を分離。
+- `.zshrc` — zsh 設定。asdf / direnv / starship を初期化し、`~/.zshrc_local` で機密・ローカル設定を分離。プロンプトは末尾の `starship init zsh` で有効化（starship 自体は設定ファイルを持たずデフォルト構成）。
 - `.gitconfig` — pager に delta（side-by-side / line-numbers / navigate）。
-- `bin/git-diff-archive` — 2 リビジョン間の差分ファイルだけを zip 化して `~/desktop/` へ出力する関数（引数の数で挙動が変わる）。`.zshrc` に `acvDir` エイリアス。
-- `.vimrc` — 素の Vim 用（Neovim とは別系統のレガシー設定）。
