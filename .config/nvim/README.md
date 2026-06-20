@@ -2,6 +2,23 @@
 
 Leader キーは `Space` に設定。
 
+## 前提条件
+
+この設定は外部コマンド・ツールに依存している。新しい環境で使う前に以下を導入しておくこと（未導入だと該当プラグインが起動時にエラーを出す）。
+
+| 必要なもの | 用途 | 備考 |
+|---|---|---|
+| **Neovim 0.12+** | 本体 | nvim-treesitter の main 版が 0.12 必須。LSP は新 API（0.11+ の `vim.lsp.config`/`vim.lsp.enable`）を使用 |
+| **git / curl / tar** | lazy.nvim の bootstrap、treesitter パーサの取得 | |
+| **C コンパイラ（gcc / make）** | telescope-fzf-native のビルド、treesitter パーサのコンパイル | Debian/Ubuntu 系は `sudo apt install build-essential` |
+| **tree-sitter CLI 0.26.1+** | nvim-treesitter main 版がパーサのビルドに使用 | npm 版ではなくバイナリ/パッケージで入れる。プリビルドを `~/.local/bin` 等 PATH の通った場所へ配置。apt の `tree-sitter-cli` は古い場合あり |
+| **ripgrep（`rg`）** | Telescope のファイル検索・live grep | |
+| **Nerd Font** | アイコン表示（nvim-web-devicons / lualine / nvim-tree） | GUI フォントは `HackGen Console NF` |
+| **Node.js** | LSP サーバ `ts_ls` / `pyright` の実行に必要 | |
+| **LSP サーバ本体（`lua_ls` / `ts_ls` / `pyright`）** | LSP 機能 | mason は使っていないので手動でインストールし PATH を通すこと |
+
+プラグイン本体は初回起動時に lazy.nvim が自動取得する。treesitter パーサは設定読み込み時に自動インストールされる（`tree-sitter` CLI が PATH 上にあること）。
+
 ## 基本設定
 
 | 設定 | 値 |

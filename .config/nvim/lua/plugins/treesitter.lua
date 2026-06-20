@@ -1,36 +1,49 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  -- main はリライト版。旧 nvim-treesitter.configs API は廃止され、
+  -- パーサ導入は install()、ハイライト/インデントは FileType autocmd で有効化する。
+  -- main 版は遅延ロード非対応のため lazy = false が必須。
+  branch = "main",
+  lazy = false,
   build = ":TSUpdate",
-  event = { "BufReadPre", "BufNewFile" },
   config = function()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = {
-        "bash",
-        "c",
-        "html",
-        "css",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-        "go",
-        "rust",
-        "toml",
-      },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = { enable = true },
+    local ts = require("nvim-treesitter")
+
+    -- 導入したいパーサ群（旧 ensure_installed 相当）。
+    local ensure_installed = {
+      "bash",
+      "c",
+      "html",
+      "css",
+      "javascript",
+      "json",
+      "lua",
+      "markdown",
+      "markdown_inline",
+      "python",
+      "query",
+      "regex",
+      "tsx",
+      "typescript",
+      "vim",
+      "yaml",
+      "go",
+      "rust",
+      "toml",
+    }
+
+    -- 未導入のパーサのみ非同期インストール（install は導入済みなら no-op）。
+    ts.install(ensure_installed)
+
+    -- ファイルを開いたとき、対応パーサがあればハイライトとインデントを有効化する。
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(args)
+        -- パーサ未導入のファイルタイプでは start が失敗するため pcall で握りつぶす。
+        if pcall(vim.treesitter.start, args.buf) then
+          -- treesitter ベースのインデント（main 版では experimental）。
+          vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        end
+      end,
     })
   end,
 }
