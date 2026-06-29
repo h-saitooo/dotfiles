@@ -111,6 +111,7 @@ brew "speedtest"
 brew "sqlite"
 brew "tmux"
 brew "tree-sitter"
+brew "tree-sitter-cli" # nvim-treesitter (main) がパーサのコンパイルに使う CLI 本体
 brew "unbound"
 brew "unibilium"
 brew "utf8proc"
