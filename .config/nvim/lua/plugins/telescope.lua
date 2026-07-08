@@ -10,6 +10,17 @@ return {
     local telescope = require("telescope")
     local actions = require("telescope.actions")
 
+    -- telescope 0.1.x のプレビューは nvim-treesitter の旧 master API
+    -- (nvim-treesitter.parsers.ft_to_lang 等) に依存しているが、main 版へ移行した
+    -- ため該当 API が消え、プレビュー時に ft_to_lang で落ちる。
+    -- プレビューの TS ハイライトを Neovim 標準の vim.treesitter.start へ差し替える
+    -- （ft→lang 変換・パーサ有無判定・ハイライタ起動を一括で行う）。
+    -- パーサ未導入なら pcall が false を返し、telescope が regex ハイライトへ fallback する。
+    require("telescope.previewers.utils").ts_highlighter = function(bufnr, ft)
+      local lang = vim.treesitter.language.get_lang(ft) or ft
+      return pcall(vim.treesitter.start, bufnr, lang)
+    end
+
     telescope.setup({
       defaults = {
         path_display = { "truncate" },
