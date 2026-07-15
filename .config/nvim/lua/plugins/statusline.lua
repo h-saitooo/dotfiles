@@ -6,7 +6,8 @@ return {
 
     lualine.setup({
       options = {
-        theme = "catppuccin",
+        -- catppuccin の更新で lualine テーマ名が flavour 別（catppuccin-mocha 等）になった
+        theme = "catppuccin-mocha",
       },
     })
   end,

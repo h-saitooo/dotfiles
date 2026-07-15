@@ -1,3 +1,10 @@
+-- Windows では tree-sitter CLI が既定で MSVC (cl.exe) を探すため、
+-- 無い環境では mingw の gcc でパーサをコンパイルさせる。
+-- （spec ファイルは lazy.nvim の起動時スキャンで読まれるので build/:TSUpdate より先に効く）
+if vim.fn.has("win32") == 1 and vim.fn.executable("cl") == 0 then
+  vim.env.CC = "gcc"
+end
+
 return {
   "nvim-treesitter/nvim-treesitter",
   -- main はリライト版。旧 nvim-treesitter.configs API は廃止され、
