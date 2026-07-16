@@ -13,13 +13,20 @@ folder=$(basename "$cwd")
 # ── Git branch ─────────────────────────────────────────────────────────────
 git_branch=$(git -C "$cwd" --no-optional-locks rev-parse --abbrev-ref HEAD 2>/dev/null)
 
-# ── Model display name ─────────────────────────────────────────────────────
+# ── Model display name + reasoning effort ──────────────────────────────────
 model=$(echo "$input" | jq -r '.model.display_name // empty')
+effort=$(echo "$input" | jq -r '.effort.level // empty')
 
 # ── Line 1 ─────────────────────────────────────────────────────────────────
-# [model] 📁 folder | 🌿 branch
+# [model (effort)] 📁 folder | 🌿 branch
 line1=""
-[ -n "$model" ] && line1="\033[35m[${model}]\033[0m "
+if [ -n "$model" ]; then
+    if [ -n "$effort" ]; then
+        line1="\033[35m[${model} (${effort})]\033[0m "
+    else
+        line1="\033[35m[${model}]\033[0m "
+    fi
+fi
 line1="${line1}📁 \033[36m${folder}\033[0m"
 if [ -n "$git_branch" ]; then
     line1="${line1} \033[90m|\033[0m 🌿 \033[32m${git_branch}\033[0m"
@@ -78,14 +85,12 @@ if [ -n "$week_pct" ]; then
     week_part="🗓️  ${wc}${week_int}%\033[0m"
 fi
 
-# ── API cost (official total from stdin, shown when no subscription rate limits) ──
+# ── API 換算コスト（クライアント側推定値。サブスクリプションでも表示） ──────
 cost_part=""
-if [ -z "$five_pct" ] && [ -z "$week_pct" ]; then
-    total_cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
-    if [ -n "$total_cost" ]; then
-        cost_fmt=$(printf "$%.4f" "$total_cost" 2>/dev/null || echo "\$${total_cost}")
-        cost_part="💸 \033[36m${cost_fmt}\033[0m"
-    fi
+total_cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
+if [ -n "$total_cost" ]; then
+    cost_fmt=$(printf "$%.4f" "$total_cost" 2>/dev/null || echo "\$${total_cost}")
+    cost_part="💸 \033[36m${cost_fmt}\033[0m"
 fi
 
 # ── Claude Code version ────────────────────────────────────────────────────
