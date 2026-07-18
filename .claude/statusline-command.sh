@@ -38,10 +38,10 @@ if [ -n "$used_pct" ]; then
     used_int=$(printf "%.0f" "$used_pct")
     # 10-char bar
     filled=$(( used_int / 10 ))
-    empty=$(( 10 - filled ))
+    empty_blocks=$(( 10 - filled ))
     bar=""
-    for i in $(seq 1 $filled); do bar="${bar}█"; done
-    for i in $(seq 1 $empty);  do bar="${bar}░"; done
+    for i in $(seq 1 $filled);       do bar="${bar}█"; done
+    for i in $(seq 1 $empty_blocks); do bar="${bar}░"; done
     # Color by usage level
     if [ "$used_int" -ge 80 ]; then
         bar_color="\033[31m"
@@ -76,20 +76,20 @@ week_part=""
 if [ -n "$week_pct" ]; then
     week_int=$(printf "%.0f" "$week_pct")
     if [ "$week_int" -ge 80 ]; then
-        wc="\033[31m"
+        wc_color="\033[31m"
     elif [ "$week_int" -ge 50 ]; then
-        wc="\033[33m"
+        wc_color="\033[33m"
     else
-        wc="\033[36m"
+        wc_color="\033[36m"
     fi
-    week_part="🗓️  ${wc}${week_int}%\033[0m"
+    week_part="🗓️ ${wc_color}${week_int}%\033[0m"
 fi
 
 # ── API 換算コスト（クライアント側推定値。サブスクリプションでも表示） ──────
 cost_part=""
 total_cost=$(echo "$input" | jq -r '.cost.total_cost_usd // empty')
 if [ -n "$total_cost" ]; then
-    cost_fmt=$(printf "$%.4f" "$total_cost" 2>/dev/null || echo "\$${total_cost}")
+    cost_fmt=$(printf "\$%.4f" "$total_cost" 2>/dev/null || echo "\$${total_cost}")
     cost_part="💸 \033[36m${cost_fmt}\033[0m"
 fi
 
@@ -124,7 +124,7 @@ if [ -n "$added_dirs_json" ]; then
             dir_names="${base}"
         fi
     done <<< "$added_dirs_json"
-    [ -n "$dir_names" ] && line3="🗂️  \033[36m${dir_names}\033[0m"
+    [ -n "$dir_names" ] && line3="🗂️ \033[36m${dir_names}\033[0m"
 fi
 
 # ── Output ──────────────────────────────────────────────────────────────────
