@@ -11,6 +11,7 @@ local config = wezterm.config_builder()
 package.path = wezterm.config_dir .. '/lua/?.lua;' .. package.path
 
 require('appearance').apply(config)
+require('domain').apply(config)
 require('status').setup(config)
 
 -- キーバインド

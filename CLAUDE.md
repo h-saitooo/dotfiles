@@ -40,6 +40,7 @@ lazy.nvim ベース。Leader は `Space`。**全キーバインド・プラグ�
 モジュール（`lua/`）:
 - `platform.lua` — `wezterm.target_triple` から OS 判定し `M.name`（`macos` / `linux` / `windows` / `other`）を返す。**OS 依存処理は必ずこれ経由で分岐する。**
 - `appearance.lua` — フォント（`Monaspace Argon` + OS 別アイコンフォントのフォールバック）、TokyoNight 配色、ウィンドウサイズ。
+- `domain.lua` — 起動時の接続先。Windows では `wezterm.default_wsl_domains()` の先頭を `default_domain` に設定して WSL に接続する。macOS / Linux は何もしない（ローカルシェル）。
 - `stats.lua` — 計測ディスパッチャ。Linux なら `stats_linux` を返し、他 OS は 0 を返すスタブ。
 - `stats_linux.lua` — `/proc/stat`・`/proc/meminfo` 直読み（fork 不要）、GPU/VRAM は `nvidia-smi` を 2 秒キャッシュで呼ぶ。
 - `status.lua` — 右ステータスバー（CPU/RAM/GPU/VRAM）。Linux 以外では何も表示しない。
