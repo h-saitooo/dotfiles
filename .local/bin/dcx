@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# devcontainer 内で AI エージェントを起動し、herdr サイドバーに表示する。
+#   dcx                     … claude / カレントディレクトリのリポジトリ
+#   dcx codex               … codex  / カレントディレクトリのリポジトリ
+#   dcx /path/to/repo       … claude / 指定リポジトリ
+#   dcx codex /path/to/repo … codex  / 指定リポジトリ
+set -euo pipefail
+
+# devcontainer CLI は mise 管理の node 配下にあるので PATH を補う
+for d in "$HOME/.local/share/mise/installs/node/lts/bin" "$HOME/.local/share/mise/shims"; do
+  [ -d "$d" ] || continue
+  case ":$PATH:" in *":$d:"*) ;; *) PATH="$d:$PATH" ;; esac
+done
+export PATH
+
+# 第1引数がディレクトリでなければエージェント名として扱う
+agent=claude
+if [ $# -gt 0 ] && [ ! -d "$1" ]; then
+  agent="$1"
+  shift
+fi
+case "$agent" in
+  claude | codex) ;;
+  *)
+    echo "dcx: unknown agent '$agent' (claude|codex)" >&2
+    exit 2
+    ;;
+esac
+
+ws="${1:-$PWD}"
+devcontainer up --workspace-folder "$ws"
+exec env "HERDR_AGENT=$agent" devcontainer exec --workspace-folder "$ws" "$agent"

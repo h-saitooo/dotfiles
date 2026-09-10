@@ -1,0 +1,30 @@
+onboarding = false
+[theme]
+name = "terminal"
+auto_switch = false
+
+[ui.toast]
+delivery = "system"
+
+# herdr-floax:keybind
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "herdr-floax.toggle"
+description = "Toggle floating pane"
+
+# devcontainer 内で AI エージェントを起動（herdr サイドバーに表示）
+[[keys.command]]
+key = "prefix+alt+c"
+type = "pane"
+command = "/home/noppo/.local/bin/dcx"
+description = "claude in devcontainer"
+
+[[keys.command]]
+key = "prefix+alt+x"
+type = "pane"
+command = "/home/noppo/.local/bin/dcx codex"
+description = "codex in devcontainer"
+
+[ui]
+agent_panel_sort = "spaces"

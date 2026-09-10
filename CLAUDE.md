@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - 自動インストール / シンボリックリンク作成スクリプトは**コミットされていない**（探さないこと）。
 - `.config/nvim` と `.config/wezterm` は `~/.config/` 配下へ手動でシンボリックリンクされている（`~/.config/nvim -> <repo>/.config/nvim`）。ファイルを編集すれば即座に実環境へ反映される。
+- `.config/herdr/config.toml` はファイル単位で `~/.config/herdr/config.toml` へシンボリックリンク（herdr 設定ディレクトリにはログ・ソケットが同居するのでディレクトリごとは張らない）。`.local/bin/dcx` は `~/.local/bin/dcx` へシンボリックリンク。どちらも編集が即反映される。
 - ホーム直下の `.zshrc` / `.gitconfig` 等は手動配置で、`~/` の実体とリポジトリ版が一致しないことがある。
 
 ## パッケージ管理
