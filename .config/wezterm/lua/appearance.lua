@@ -13,7 +13,7 @@ local M = {}
 local ICON_FONTS = {
   macos   = { 'Apple Color Emoji', 'Apple Symbols' },
   linux   = { 'Noto Color Emoji', 'Noto Sans Symbols 2' },
-  windows = { 'Segoe UI Emoji', 'Segoe UI Symbol' },
+  windows = { 'Segoe UI Emoji', 'Segoe UI Symbol', 'JetBrainsMono NF' },
 }
 
 -- font_size は pt 指定だが、pt→px 変換に使う DPI の既定値が OS で異なる。
