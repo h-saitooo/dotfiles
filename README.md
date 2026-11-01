@@ -1,6 +1,7 @@
 # dotfiles
 
 個人用の設定ファイル群。詳細やエージェント向けガイドは [CLAUDE.md](./CLAUDE.md) を参照。
+新しい Mac での手順は [macOS のセットアップ](./docs/setup-macos.md) を参照。
 
 ## 管理対象
 
@@ -10,11 +11,12 @@
 - `.config/wezterm/` — WezTerm 設定
 - `.config/herdr/config.toml` — herdr（ターミナルワークスペースマネージャ）のキーバインド・UI 設定
 - `.local/bin/dcx` — devcontainer 内で claude / codex を起動する herdr 用ラッパー
+- `.local/bin/mmdc` — Node.js のバージョンを固定して mermaid-cli を実行するラッパー
 - `.asdfrc` / `.uim` — asdf / 日本語入力（uim）設定
 - `Brewfile` — macOS のパッケージ（`brew bundle --file=Brewfile`）
 
 ## 配置
 
 `.config/nvim` と `.config/wezterm` はディレクトリごと、`.config/herdr/config.toml` はファイル単位で `~/.config/` 配下へ手動でシンボリックリンクする（herdr の設定ディレクトリはログ・ソケットが同居するため、ディレクトリではなくファイルを張る）。
-`.local/bin/dcx` は `~/.local/bin/` へシンボリックリンクする。
+`.local/bin/dcx` と `.local/bin/mmdc` は `~/.local/bin/` へシンボリックリンクする。
 ホーム直下のファイル（`.zshrc` / `.gitconfig` 等）は手動配置。
