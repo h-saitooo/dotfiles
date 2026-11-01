@@ -17,13 +17,13 @@ description = "Toggle floating pane"
 [[keys.command]]
 key = "prefix+alt+c"
 type = "pane"
-command = "/home/noppo/.local/bin/dcx"
+command = "$HOME/.local/bin/dcx"
 description = "claude in devcontainer"
 
 [[keys.command]]
 key = "prefix+alt+x"
 type = "pane"
-command = "/home/noppo/.local/bin/dcx codex"
+command = "$HOME/.local/bin/dcx codex"
 description = "codex in devcontainer"
 
 [ui]
