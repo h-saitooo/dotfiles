@@ -8,6 +8,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 - 自動インストール / シンボリックリンク作成スクリプトは**コミットされていない**（探さないこと）。
 - `.config/nvim` と `.config/wezterm` は `~/.config/` 配下へ手動でシンボリックリンクされている（`~/.config/nvim -> <repo>/.config/nvim`）。ファイルを編集すれば即座に実環境へ反映される。
+- `.local/bin/mmdc` は `~/.local/bin/mmdc` へシンボリックリンク。編集が即反映される。
 - ホーム直下の `.zshrc` / `.gitconfig` 等は手動配置で、`~/` の実体とリポジトリ版が一致しないことがある。
 
 ## パッケージ管理

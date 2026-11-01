@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# mermaid-cli (mmdc) を固定バージョンの Node.js で実行するラッパー。
+# md-render.nvim は PATH 上の mmdc を固定名で呼ぶので、ここで Node.js のバージョンを固定する。
+# プロジェクトの mise.toml が古い Node.js を指していても、未 trust でも動くようにする。
+set -euo pipefail
+
+NODE_VERSION=24.22.1
+MERMAID_CLI_VERSION=12.0.0
+PUPPETEER_VERSION=25.16.0
+
+prefix="${XDG_DATA_HOME:-$HOME/.local/share}/mmdc/${MERMAID_CLI_VERSION}"
+bin="$prefix/node_modules/.bin/mmdc"
+
+# cwd の mise 設定を読ませないよう / で解決する
+node_dir=$(cd / && mise where "node@${NODE_VERSION}" 2>/dev/null) || {
+  (cd / && mise install "node@${NODE_VERSION}") >&2
+  node_dir=$(cd / && mise where "node@${NODE_VERSION}")
+}
+PATH="$node_dir/bin:$PATH"
+export PATH
+
+# 初回だけ専用ディレクトリへインストールする（バージョンごとに別ディレクトリ）。
+# puppeteer の postinstall はブラウザ取得に失敗しても npm install を失敗させないので、
+# スクリプトは止めてブラウザを明示的に取得し、両方成功したときだけ $prefix に置く。
+if [ ! -x "$bin" ]; then
+  tmp="$prefix.tmp.$$"
+  trap 'rm -rf "$tmp"' EXIT
+  npm install --prefix "$tmp" --save-exact --no-fund --no-audit --ignore-scripts \
+    "@mermaid-js/mermaid-cli@${MERMAID_CLI_VERSION}" "puppeteer@${PUPPETEER_VERSION}" >&2
+  (cd "$tmp" && npx --no-install puppeteer browsers install chrome-headless-shell) >&2
+  mv "$tmp" "$prefix"
+  trap - EXIT
+fi
+
+exec "$bin" "$@"
