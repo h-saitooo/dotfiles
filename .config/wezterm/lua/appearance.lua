@@ -44,6 +44,10 @@ function M.apply(config)
 
   config.color_scheme = 'TokyoNight (Gogh)'
   config.window_background_opacity = 1.0
+
+  -- Neovim の md-render.nvim が画像と Mermaid 図を表示するのに使う。
+  -- Windows の WSL ドメインは ConPTY が画像のエスケープシーケンスを落とすので、SSH ドメイン経由でのみ表示できる。
+  config.enable_kitty_graphics = true
 end
 
 return M
