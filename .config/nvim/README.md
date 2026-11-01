@@ -16,6 +16,10 @@ Leader キーは `Space` に設定。
 | **Nerd Font** | アイコン表示（nvim-web-devicons / lualine / nvim-tree） | GUI フォントは `HackGen Console NF` |
 | **Node.js** | LSP サーバ `ts_ls` / `pyright` の実行に必要 | |
 | **LSP サーバ本体（`lua_ls` / `ts_ls` / `pyright`）** | LSP 機能 | mason は使っていないので手動でインストールし PATH を通すこと |
+| **kitty graphics protocol 対応の端末** | md-render.nvim の画像と Mermaid 図の表示 | Neovim 0.12 では `TERM_PROGRAM` で対応を判定するので、SSH 経由では接続側で渡す。Windows の WezTerm は WSL ドメインだと ConPTY が画像を落とすので、SSH ドメインで接続する |
+| **mise** | Mermaid 図を描く `mmdc`（[`.local/bin/mmdc`](../../.local/bin/mmdc)）の Node.js | 初回実行時に mermaid-cli と chrome-headless-shell を取得する。`mmdc --version` を一度実行して、取得を済ませておく |
+| **unzip / libnss3 / libasound2t64 / fonts-noto-cjk** | chrome-headless-shell の展開と実行、図の日本語表示 | Ubuntu のパッケージ名 |
+| **ffmpeg**（任意） | md-render.nvim の JPEG / WebP / GIF / 動画の表示 | 無くても PNG は表示できる |
 
 プラグイン本体は初回起動時に lazy.nvim が自動取得する。treesitter パーサは設定読み込み時に自動インストールされる（`tree-sitter` CLI が PATH 上にあること）。
 
@@ -57,6 +61,8 @@ Leader キーは `Space` に設定。
 | [claudecode.nvim](https://github.com/coder/claudecode.nvim) | Claude Code 連携 |
 | [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) | ファイルアイコン |
 | [nvim-lsp-file-operations](https://github.com/antosha417/nvim-lsp-file-operations) | LSP ファイル操作 |
+| [md-render.nvim](https://github.com/delphinus/md-render.nvim) | Markdown の整形表示、画像、Mermaid 図 |
+| [budoux.lua](https://github.com/delphinus/budoux.lua) | md-render.nvim で日本語を文節単位で折り返す |
 
 ## キーバインド
 
@@ -155,6 +161,17 @@ Telescope 内操作:
 | `Ctrl+Space` | Insert | 補完を手動で開く |
 | `Ctrl+e` | Insert | 補完をキャンセル |
 | `Enter` | Insert | 補完を確定 |
+
+### Markdown プレビュー (md-render)
+
+Markdown のバッファでのみ有効。
+
+| キー | モード | 説明 |
+|---|---|---|
+| `<leader>mp` | Normal | フロートでプレビュー（トグル） |
+| `<leader>mt` | Normal | タブでプレビュー（トグル） |
+| `<leader>ms` | Normal | 縦分割でソースとプレビューを並べる |
+| `<leader>mr` | Normal | 現在のウィンドウをソースとプレビューで切り替え |
 
 ### Claude Code
 
